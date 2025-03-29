@@ -39,7 +39,11 @@ export function ImageTiler({
   },
 }: ImageTilerProps) {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const [styleHelpers, setStyleHelpers] = useState({
+    width: 0,
+    height: 0,
+    scale: 1,
+  });
   const [selected, setSelected] = useState<{ x: number; y: number }[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -214,7 +218,7 @@ export function ImageTiler({
         width *= scale;
         height *= scale;
 
-        setCanvasSize({ width, height });
+        setStyleHelpers({ width, height, scale });
       };
     };
     reader.readAsDataURL(image);
@@ -232,16 +236,20 @@ export function ImageTiler({
       width={imageSize.width}
       height={imageSize.height}
       style={{
-        width: canvasSize.width,
-        height: canvasSize.height,
+        width: styleHelpers.width,
+        height: styleHelpers.height,
       }}
       onClick={(e) => {
         const rect = canvasRef.current?.getBoundingClientRect();
         if (!rect) return;
         const width = rect.width / cols;
         const height = rect.height / rows;
-        const x = Math.floor((e.clientX - offsetX - rect.left) / width);
-        const y = Math.floor((e.clientY - offsetY - rect.top) / height);
+        const x = Math.floor(
+          (e.clientX - offsetX * styleHelpers.scale - rect.left) / width
+        );
+        const y = Math.floor(
+          (e.clientY - offsetY * styleHelpers.scale - rect.top) / height
+        );
         toggleSelected(x, y);
       }}
     />
