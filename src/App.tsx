@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useId, useRef, useState } from "react";
 import background from "./assets/logo.png";
+import github from "./assets/github.svg";
 import ImageTiler, { ImageTilerRef } from "./components/image-tiler";
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
@@ -32,7 +33,14 @@ function App() {
       }}
     >
       <main className="relative grid grid-rows-3 divide-red-500 md:grid-rows-1 grid-cols-1 md:grid-cols-3 overflow-hidden p-6 gap-4 items-center justify-center h-screen w-screen backdrop-blur dark:backdrop-blur-lg bg-white/80 dark:bg-black/80">
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 flex items-center justify-center gap-4">
+          <a
+            href="https://github.com/undoredoundo/rhember-ao-indexer"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={github} className="size-6 transition-all dark:invert" />
+          </a>
           <ModeToggle />
         </div>
         <div className="row-span-2 md:row-span-1 col-span-1 md:col-span-2 flex flex-col gap-2 items-center justify-center h-full">
