@@ -98,7 +98,9 @@ export function ImageTiler({
     return graphics
       .map((line) => {
         if (line.type === "graphic") {
-          return `Grh${line.index}=1-${graphic}-${line.x}-${line.y}-${tileWidth}-${tileHeight}`;
+          return `Grh${line.index}=1-${graphic}-${
+            line.x * tileWidth + offsetX
+          }-${line.y * tileHeight + offsetY}-${tileWidth}-${tileHeight}`;
         }
         return `Grh${line.index}=${line.graphics.length}-${line.graphics.join(
           "-"
@@ -110,6 +112,8 @@ export function ImageTiler({
     graphic,
     imageSize.width,
     initialIndex,
+    offsetX,
+    offsetY,
     selected,
     tileHeight,
     tileWidth,
@@ -130,9 +134,8 @@ export function ImageTiler({
         selection.push({ x, y });
       }
       setSelected(selection);
-      copyToClipboard();
     },
-    [copyToClipboard, selected]
+    [selected, setSelected]
   );
 
   const cols = useMemo(
